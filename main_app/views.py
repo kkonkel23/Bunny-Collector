@@ -1,27 +1,19 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Bunny
 
 # Create your views here.
 
-class Bunny:  # Note that parens are optional if not inheriting from another class
-  def __init__(self, name, breed, description, age):
-    self.name = name
-    self.breed = breed
-    self.description = description
-    self.age = age
-
-bunnies = [
-  Bunny('Muncho', 'Mini Rex', 'foul little demon', 3),
-  Bunny('Daloris', 'Dwarf Lionhead', 'Quiet Sweetheart', 0),
-  Bunny('Chloe', 'Dwarf Lionhead', 'Energetic', 4)
-]
-
 # Define the home view
 def home(request):
-  return HttpResponse('<h1>Hello ()｡‸｡()</h1>')
+    return render(request, 'home.html')
 
 def about(request):
     return render(request, 'about.html')
 
 def bunnies_index(request):
-    return render(request, 'bunnies/index.html', { 'bunnies': bunnies })
+  bunnies = Bunny.objects.all()
+  return render(request, 'bunnies/index.html', { 'bunnies': bunnies })
+
+def bunnies_detail(request, bunny_id):
+  bunny = Bunny.objects.get(id=bunny_id)
+  return render(request, 'bunnies/detail.html', {'bunny': bunny})

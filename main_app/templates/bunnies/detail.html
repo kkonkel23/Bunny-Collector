@@ -1,23 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Bunny List</h1>
+<h1>Bunny Details</h1>
 
-{% for bunny in bunnies %}
-  <div class="card">
-    <a href="{% url 'detail' bunny.id %}">
-      <div class="card-content">
+<div class="card">
+    <div class="card-content">
         <span class="card-title">{{ bunny.name }}</span>
         <p>Breed: {{ bunny.breed }}</p>
         <p>Description: {{ bunny.description }}</p>
         {% if bunny.age > 0 %}
-          <p>Age: {{ bunny.age }}</p>
+        <p>Age: {{ bunny.age }}</p>
         {% else %}
-          <p>Age: Bunny</p>
+        <p>Age: Bunny</p>
         {% endif %}
-      </div>
-    </a>
-  </div>
-{% endfor %}
+    </div>
+</div>
 
 {% endblock %}
