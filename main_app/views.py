@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Bunny
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Create your views here.
 
@@ -22,3 +22,11 @@ def bunnies_detail(request, bunny_id):
 class BunnyCreate(CreateView):
   model = Bunny
   fields = '__all__'
+
+class BunnyUpdate(UpdateView):
+  model = Bunny
+  fields = ['breed', 'description', 'age']
+
+class BunnyDelete(DeleteView):
+  model = Bunny
+  success_url = '/bunnies/'
