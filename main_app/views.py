@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Bunny, Toy
+from .models import Bunny, Toy, Bunny_Breed
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .forms import FeedingForm
@@ -19,10 +19,12 @@ def bunnies_index(request):
 
 def bunnies_detail(request, bunny_id):
   bunny = Bunny.objects.get(id=bunny_id)
+  toys_bunny_doesnt_have = Toy.objects.exclude(id__in = bunny.toys.all().values_list('id'))
   # instantiate FeedingForm to be rendered in the template
   feeding_form = FeedingForm()
   return render(request, 'bunnies/detail.html', {
-    'bunny': bunny, 'feeding_form': feeding_form
+    'bunny': bunny, 'feeding_form': feeding_form,
+    'toys': toys_bunny_doesnt_have
   })
 
 def add_feeding(request, bunny_id):
@@ -68,3 +70,11 @@ class ToyDelete(DeleteView):
 def assoc_toy(request, bunny_id, toy_id):
   Bunny.objects.get(id=bunny_id).toys.add(toy_id)
   return redirect('detail', bunny_id=bunny_id)
+
+def Bunny_BreedList(request):
+  bunny_breeds = Bunny_Breed.objects.all()
+  return render(request, 'main_app/bunny_breed_list.html', { 'bunny_breeds': bunny_breeds })
+
+def bunnies_index(request):
+  bunnies = Bunny.objects.all()
+  return render(request, 'bunnies/index.html', { 'bunnies': bunnies })

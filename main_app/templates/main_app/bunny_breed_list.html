@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Bunny Breed List</h1>
+<div class="breed-container">
+    {% for bunny_breed in bunny_breeds %}
+    <div class="breed-card">
+        <div class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator" src="{{bunny_breed.image}}">
+            </div>
+            <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">{{ bunny_breed.breed }}</span>
+            </div>
+            <div class="card-reveal">
+                <span class="card-title grey-text text-darken-4">{{ bunny_breed.breed }}<i class="material-icons right">close</i></span>
+                <p>Color: {{ bunny_breed.color }}</p>
+                <p>Average Size: {{ bunny_breed.size }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
